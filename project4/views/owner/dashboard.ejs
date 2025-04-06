@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>דף בעל המכולת</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to right, #e0f7fa, #f1fafe);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        direction: rtl;
+      }
+
+      .container {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 90%;
+        max-width: 500px;
+      }
+
+      h1 {
+        margin-bottom: 30px;
+        color: #007ba7;
+      }
+
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .dashboard-button {
+        background-color: #b2ebf2;
+        color: #004d61;
+        text-decoration: none;
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 1.1em;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: 2px solid #81d4fa;
+      }
+
+      .dashboard-button:hover {
+        background-color: #81d4fa;
+        color: #003d4d;
+      }
+
+      .logout {
+        margin-top: 25px;
+        font-size: 0.9em;
+        color: #999;
+      }
+
+      .logout a {
+        color: #007ba7;
+        text-decoration: none;
+      }
+
+      .logout a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ברוך הבא, <%= owner %>!</h1>
+      <div class="button-container">
+        <a href="/owner/place-order" class="dashboard-button"
+          >הזמנת סחורה מספק</a
+        >
+        <a href="/owner/orders" class="dashboard-button">צפייה בהזמנות </a>
+      </div>
+      <div class="logout">
+        <p><a href="/logout">התנתק</a></p>
+      </div>
+    </div>
+  </body>
+</html>

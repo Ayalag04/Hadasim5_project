@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>כניסת ספק / בעל מכולת</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8; /* רקע בהיר */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 3rem;
+        color: #00bcd4; /* תכלת */
+        margin-bottom: 40px;
+      }
+
+      button {
+        background-color: #00bcd4; /* תכלת */
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        margin: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 250px;
+      }
+
+      button:hover {
+        background-color: #0097a7; /* גוון כהה יותר של תכלת */
+      }
+
+      /* הוספתי עיצוב נוסף לדף */
+      .container {
+        background-color: white;
+        padding: 50px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ברוך הבא למערכת ניהול המכולת</h1>
+      <button onclick="window.location.href='/supplier/login'">
+        כניסת ספק
+      </button>
+      <button onclick="window.location.href='/owner/login'">
+        כניסת בעל מכולת
+      </button>
+    </div>
+  </body>
+</html>

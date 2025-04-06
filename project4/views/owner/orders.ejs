@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>הזמנת סחורה מספק</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #e0f7fa;
+        direction: rtl;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #007acc;
+      }
+      select,
+      input[type="number"] {
+        padding: 8px;
+        margin: 5px 0;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 12px;
+        text-align: center;
+      }
+      .error {
+        color: red;
+        font-size: 0.9em;
+      }
+      .submit-btn {
+        margin-top: 20px;
+        padding: 12px 20px;
+        background-color: #00bcd4;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1em;
+        cursor: pointer;
+      }
+      .submit-btn:hover {
+        background-color: #0097a7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>הזמנת סחורה מספק</h1>
+
+      <form id="orderForm" method="POST" action="/owner/place-order">
+        <label for="supplierSelect">בחר ספק:</label>
+        <select id="supplierSelect" name="supplierId" required>
+          <option value="">-- בחר ספק --</option>
+          <% suppliers.forEach(supplier => { %>
+          <option value="<%= supplier.id %>">
+            <%= supplier.company_name %> - <%= supplier.supplier_name %>
+          </option>
+          <% }) %>
+        </select>
+
+        <div id="productsContainer"></div>
+
+        <button type="submit" class="submit-btn">שלח הזמנה</button>
+      </form>
+    </div>
+
+    <script>
+      const supplierSelect = document.getElementById("supplierSelect");
+      const productsContainer = document.getElementById("productsContainer");
+
+      supplierSelect.addEventListener("change", async () => {
+        const supplierId = supplierSelect.value;
+        if (!supplierId) return;
+
+        const res = await fetch(`/owner/products/${supplierId}`);
+        const products = await res.json();
+
+        let html = "";
+        if (products.length === 0) {
+          html = "<p>אין מוצרים לספק זה.</p>";
+        } else {
+          html = `
+          <table>
+            <thead>
+              <tr>
+                <th>שם מוצר</th>
+                <th>מחיר ליחידה</th>
+                <th>כמות מינימלית</th>
+                <th>כמות להזמנה</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${products
+                .map(
+                  (product) => `
+                <tr>
+                  <td>${product.product_name}</td>
+                  <td>${product.price_per_item}</td>
+                  <td>${product.min_quantity}</td>
+                  <td>
+                    <input type="number" name="quantities[${product.id}]" min="0" placeholder="השאר ריק אם לא מעוניין" />
+                    <input type="hidden" name="products[${product.id}]" value="${product.product_name}" />
+                    <input type="hidden" name="minQuantities[${product.id}]" value="${product.min_quantity}" />
+                  </td>
+                </tr>
+              `
+                )
+                .join("")}
+            </tbody>
+          </table>
+        `;
+        }
+
+        productsContainer.innerHTML = html;
+      });
+
+      document
+        .getElementById("orderForm")
+        .addEventListener("submit", function (e) {
+          const inputs = document.querySelectorAll('input[type="number"]');
+          let valid = true;
+          inputs.forEach((input) => {
+            const quantity = parseInt(input.value);
+            const min = parseInt(
+              input.nextElementSibling.nextElementSibling.value
+            );
+            if (input.value && quantity < min) {
+              alert(`כמות קטנה מהכמות המינימלית למוצר כלשהו`);
+              valid = false;
+            }
+          });
+          if (!valid) e.preventDefault();
+        });
+    </script>
+  </body>
+</html>

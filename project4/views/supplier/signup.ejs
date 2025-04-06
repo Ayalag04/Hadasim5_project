@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>הרשמה ספק</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff; /* צבע רקע תכלת בהיר */
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h2 {
+        color: #1e90ff; /* כותרת בצבע תכלת כהה */
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      form {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        width: 350px;
+      }
+
+      label {
+        font-size: 16px;
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+      }
+
+      input[type="text"],
+      input[type="tel"],
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      input[type="text"]:focus,
+      input[type="tel"]:focus,
+      input[type="number"]:focus {
+        border-color: #1e90ff; /* צבע גבול תכלת בעת מיקוד */
+        outline: none;
+      }
+
+      button {
+        background-color: #1e90ff; /* כפתור תכלת */
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        width: 100%;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background-color: #4682b4; /* צבע תכלת כהה בעת ריחוף */
+      }
+
+      #products-container .product {
+        margin-bottom: 10px;
+      }
+
+      h3 {
+        color: #4682b4; /* צבע תכלת כהה עבור כותרת מוצרים */
+        margin-top: 20px;
+      }
+
+      p {
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      a {
+        text-decoration: none;
+        color: #1e90ff;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      button[type="button"] {
+        background-color: #32cd32; /* כפתור ירוק להוספת מוצר */
+        margin-top: 10px;
+      }
+
+      button[type="button"]:hover {
+        background-color: #28a745; /* ירוק כהה בעת ריחוף */
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>הרשמה לספק</h2>
+      <form action="/supplier/signup" method="POST">
+        <label for="company_name">שם חברה:</label>
+        <input
+          type="text"
+          id="company_name"
+          name="company_name"
+          placeholder="שם חברה"
+          required
+        />
+        <br />
+        <label for="supplier_name">שם ספק:</label>
+        <input
+          type="text"
+          id="supplier_name"
+          name="supplier_name"
+          placeholder="שם ספק"
+          required
+        />
+        <br />
+        <label for="phone">מספר טלפון:</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="מספר טלפון"
+          required
+        />
+        <br />
+
+        <h3>רשימת מוצרים</h3>
+        <div id="products-container">
+          <div class="product">
+            <input
+              type="text"
+              name="productName[]"
+              placeholder="שם מוצר"
+              required
+            />
+            <input type="number" name="price[]" placeholder="מחיר" required />
+            <input
+              type="number"
+              name="minQuantity[]"
+              placeholder="כמות מינימלית"
+              required
+            />
+          </div>
+        </div>
+        <button type="button" onclick="addProduct()">+</button>
+        <br />
+        <button type="submit">הרשמה</button>
+      </form>
+    </div>
+
+    <script>
+      function addProduct() {
+        const container = document.getElementById("products-container");
+        const div = document.createElement("div");
+        div.classList.add("product");
+        div.innerHTML = `
+          <input type="text" name="productName[]" placeholder="שם מוצר" required />
+          <input type="text" name="price[]" placeholder="מחיר" required />
+          <input type="number" name="minQuantity[]" placeholder="כמות מינימלית" required />
+        `;
+        container.appendChild(div);
+      }
+    </script>
+  </body>
+</html>

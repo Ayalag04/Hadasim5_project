@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Supplier Orders</title>
+    <style>
+      body {
+        font-family: Arial;
+        background-color: #f0f8ff;
+        padding: 30px;
+        direction: ltr;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+      }
+      th {
+        background-color: #e0f0ff;
+      }
+      .status {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Your Orders</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.forEach(order => { %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%= order.product_name %></td>
+          <td><%= order.quantity %></td>
+          <td class="status"><%= order.status %></td>
+          <td>
+            <% if (order.status === 'Pending') { %>
+            <form
+              method="POST"
+              action="/supplier/orders/<%= order.id %>/approve"
+            >
+              <button type="submit" style="color: black">Approve</button>
+            </form>
+            <% } else { %> In Process <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <title>רשימת ההזמנות</title>
+    <style>
+      body {
+        font-family: Arial;
+        direction: rtl;
+        padding: 20px;
+        background-color: #f9f9f9;
+      }
+      h1 {
+        color: #007ba7;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 0 10px #ccc;
+      }
+      th,
+      td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+      .completed {
+        color: green;
+        font-weight: bold;
+      }
+      .approve-btn {
+        padding: 6px 12px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>רשימת הזמנות</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>מזהה הזמנה</th>
+          <th>שם מוצר</th>
+          <th>כמות</th>
+          <th>תאריך</th>
+          <th>סטטוס</th>
+          <th>פעולה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.forEach(order => { %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%= order.product_name %></td>
+          <td><%= order.quantity %></td>
+          <td><%= new Date(order.created_at).toLocaleDateString("he-IL") %></td>
+          <td>
+            <% if (order.status === 'Completed') { %>
+            <span class="completed">הושלמה</span>
+            <% } else { %> ממתינה לאישור <% } %>
+          </td>
+          <td>
+            <% if (order.status !== 'Completed') { %>
+            <form action="/owner/orders/approve/<%= order.id %>" method="POST">
+              <button class="approve-btn" type="submit">אישור הזמנה</button>
+            </form>
+            <% } else { %> ✔ <% } %>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>כניסת ספק</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff; /* צבע רקע תכלת בהיר */
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h1 {
+        color: #35608b; /* כותרת בצבע תכלת כהה */
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      form {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
+
+      label {
+        font-size: 16px;
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+      }
+
+      input[type="text"],
+      input[type="tel"] {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      input[type="text"]:focus,
+      input[type="tel"]:focus {
+        border-color: #1e90ff; /* צבע גבול תכלת בעת מיקוד */
+        outline: none;
+      }
+
+      button {
+        background-color: #1e90ff; /* כפתור תכלת */
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        width: 100%;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background-color: #4682b4; /* צבע תכלת כהה בעת ריחוף */
+      }
+
+      p {
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      a {
+        text-decoration: none;
+        color: #1e90ff;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>כניסת ספק</h1>
+      <form action="/supplier/login" method="POST">
+        <label for="supplier_name">שם ספק:</label>
+        <input type="text" id="supplier_name" name="supplier_name" required />
+        <br />
+        <label for="phone">מספר טלפון:</label>
+        <input type="tel" id="phone" name="phone" required />
+        <br />
+        <button type="submit">כניסת ספק</button>
+      </form>
+      <p>
+        אין לך חשבון? <a href="/supplier/signup"><button>הרשמה</button></a>
+      </p>
+    </div>
+  </body>
+</html>
