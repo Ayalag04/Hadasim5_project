@@ -91,6 +91,6 @@ WHERE Spouse_Id IS NOT NULL
   AND NOT EXISTS (
     SELECT 1
     FROM FamilyTree
-    WHERE Person_Id = Spouse_Id
-      AND Relative_Id = Person_Id
+    WHERE (Person_Id = Spouse_Id AND Relative_Id = Person_Id) 
+       OR (Person_Id = Person_Id AND Relative_Id = Spouse_Id)
   );
