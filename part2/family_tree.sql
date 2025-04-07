@@ -47,7 +47,7 @@ FROM Person
 WHERE Mother_Id IS NOT NULL;
 
 --הוספת קשרי בן ובת
-INSERT INTO Family_tree (Person_Id, Relative_Id, Connection_Type)
+INSERT INTO family_tree (Person_Id, Relative_Id, Connection_Type)
 SELECT 
     IF(p.Gender = 'זכר', p.Father_Id, p.Mother_Id) AS Parent_Id,
     p.Person_Id,
@@ -91,7 +91,6 @@ WHERE Spouse_Id IS NOT NULL
   AND NOT EXISTS (
     SELECT 1
     FROM FamilyTree
-    WHERE (Person_Id = Spouse_Id AND Relative_Id = Person_Id) 
-       OR (Person_Id = Person_Id AND Relative_Id = Spouse_Id)
+    WHERE Person_Id = Spouse_Id
+      AND Relative_Id = Person_Id
   );
-
