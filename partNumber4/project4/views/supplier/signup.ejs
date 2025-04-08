@@ -14,10 +14,11 @@
         align-items: center;
         height: 100vh;
         margin: 0;
+        direction: rtl;
       }
 
       h2 {
-        color: #1e90ff; /* כותרת בצבע תכלת כהה */
+        color: #3f878f; /* כותרת בצבע תכלת כהה */
         text-align: center;
         margin-bottom: 20px;
       }
@@ -40,23 +41,25 @@
       input[type="text"],
       input[type="tel"],
       input[type="number"] {
-        width: 100%;
+        width: 80%;
         padding: 10px;
         margin: 8px 0;
         border: 1px solid #ccc;
         border-radius: 4px;
         font-size: 14px;
+        background-color: #504c4c;
       }
 
       input[type="text"]:focus,
       input[type="tel"]:focus,
       input[type="number"]:focus {
-        border-color: #1e90ff; /* צבע גבול תכלת בעת מיקוד */
+        border-color: #3f878f;
         outline: none;
+        background-color: #504c4c;
       }
 
       button {
-        background-color: #1e90ff; /* כפתור תכלת */
+        background-color: #3f878f; /* כפתור תכלת */
         color: white;
         border: none;
         padding: 10px;
@@ -76,7 +79,7 @@
       }
 
       h3 {
-        color: #4682b4; /* צבע תכלת כהה עבור כותרת מוצרים */
+        color: #3f878f; /* צבע תכלת כהה עבור כותרת מוצרים */
         margin-top: 20px;
       }
 
@@ -87,7 +90,7 @@
 
       a {
         text-decoration: none;
-        color: #1e90ff;
+        color: #3f878f;
       }
 
       a:hover {
@@ -95,12 +98,12 @@
       }
 
       button[type="button"] {
-        background-color: #32cd32; /* כפתור ירוק להוספת מוצר */
+        background-color: #3f878f; /* כפתור ירוק להוספת מוצר */
         margin-top: 10px;
       }
 
       button[type="button"]:hover {
-        background-color: #28a745; /* ירוק כהה בעת ריחוף */
+        background-color: #3f878f; /* ירוק כהה בעת ריחוף */
       }
     </style>
   </head>
@@ -145,7 +148,7 @@
               placeholder="שם מוצר"
               required
             />
-            <input type="number" name="price[]" placeholder="מחיר" required />
+            <input type="text" name="price[]" placeholder="מחיר" required />
             <input
               type="number"
               name="minQuantity[]"

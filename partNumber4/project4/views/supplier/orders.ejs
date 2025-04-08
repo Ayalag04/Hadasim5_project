@@ -1,60 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he">
   <head>
     <meta charset="UTF-8" />
-    <title>Supplier Orders</title>
+    <title>הזמנות ספק</title>
     <style>
       body {
         font-family: Arial;
         background-color: #f0f8ff;
         padding: 30px;
-        direction: ltr;
+        direction: rtl;
       }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      .filter-form {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      select {
+        padding: 5px 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
       table {
         width: 100%;
         border-collapse: collapse;
         background: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
+
       th,
       td {
-        padding: 12px;
+        padding: 15px;
         border-bottom: 1px solid #ddd;
-        text-align: left;
+        text-align: center;
       }
+
       th {
         background-color: #e0f0ff;
-      }
-      .status {
         font-weight: bold;
       }
-      .filter-form {
-        margin-bottom: 20px;
+
+      tr:hover {
+        background-color: #f5faff;
+      }
+
+      .status-pending {
+        color: #d58512;
+        background-color: #fff3cd;
+        border-radius: 10px;
+        padding: 5px 10px;
+        display: inline-block;
+      }
+
+      .status-process {
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-radius: 10px;
+        padding: 5px 10px;
+        display: inline-block;
+      }
+
+      .status-completed {
+        color: #155724;
+        background-color: #d4edda;
+        border-radius: 10px;
+        padding: 5px 10px;
+        display: inline-block;
+      }
+
+      button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background-color: #0056b3;
       }
     </style>
   </head>
   <body>
-    <h1>Your Orders</h1>
+    <h1>ההזמנות שלך</h1>
 
     <!-- סינון לפי סטטוס -->
     <form class="filter-form" method="GET" action="/supplier/orders">
-      <label for="status">Filter by Status:</label>
+      <label for="status">סנן לפי סטטוס:</label>
       <select name="status" id="status" onchange="this.form.submit()">
-        <option value="" <%= !selectedStatus ? "selected" : "" %>>All</option>
-        <option value="Pending" <%= selectedStatus === "Pending" ? "selected" : "" %>>Pending</option>
-        <option value="In Process" <%= selectedStatus === "In Process" ? "selected" : "" %>>In Process</option>
-        <option value="Completed" <%= selectedStatus === "Completed" ? "selected" : "" %>>Completed</option>
+        <option value="" <%= !selectedStatus ? "selected" : "" %>>הכל</option>
+        <option value="Pending" <%= selectedStatus === "Pending" ? "selected" : "" %>>ממתינה</option>
+        <option value="In Process" <%= selectedStatus === "In Process" ? "selected" : "" %>>בתהליך</option>
+        <option value="Completed" <%= selectedStatus === "Completed" ? "selected" : "" %>>הושלמה</option>
       </select>
     </form>
 
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Status</th>
-          <th>Action</th>
+          <th>מספר</th>
+          <th>מוצר</th>
+          <th>כמות</th>
+          <th>סטטוס</th>
+          <th>פעולה</th>
         </tr>
       </thead>
       <tbody>
@@ -63,17 +120,25 @@
           <td><%= order.id %></td>
           <td><%= order.product_name %></td>
           <td><%= order.quantity %></td>
-          <td class="status"><%= order.status %></td>
           <td>
             <% if (order.status === 'Pending') { %>
-            <form
-              method="POST"
-              action="/supplier/orders/<%= order.id %>/approve"
-            >
-              <button type="submit" style="color: black">Approve</button>
+              <span class="status-pending">ממתינה</span>
+            <% } else if (order.status === 'Completed') { %>
+              <span class="status-completed">הושלמה</span>
+            <% } else { %>
+              <span class="status-process">בתהליך</span>
+            <% } %>
+          </td>
+          <td>
+            <% if (order.status === 'Pending') { %>
+            <form method="POST" action="/supplier/orders/<%= order.id %>/approve">
+              <button type="submit">אישור</button>
             </form>
-            <% } else if (order.status === 'Completed') { %> Completed <% } else
-            { %> In Process <% } %>
+            <% } else if (order.status === 'Completed') { %>
+              הושלמה
+            <% } else { %>
+              בתהליך
+            <% } %>
           </td>
         </tr>
         <% }) %>

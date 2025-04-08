@@ -22,7 +22,7 @@
       }
       h1 {
         text-align: center;
-        color: #007acc;
+        color: #3f878f;
       }
       select,
       input[type="number"] {
@@ -50,7 +50,7 @@
       .submit-btn {
         margin-top: 20px;
         padding: 12px 20px;
-        background-color: #00bcd4;
+        background-color: #3f878f;
         color: white;
         border: none;
         border-radius: 12px;
@@ -58,7 +58,24 @@
         cursor: pointer;
       }
       .submit-btn:hover {
-        background-color: #0097a7;
+        background-color: #3f878f;
+      }
+      select,
+      input[type="number"] {
+        padding: 8px;
+        margin: 5px 0;
+        width: 80%;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #504c4c;
+      }
+      input[type="number1"] {
+        padding: 8px;
+        margin: 5px 0;
+        width: 60%;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: transparent;
       }
     </style>
   </head>
@@ -117,7 +134,7 @@
                   <td>${product.price_per_item}</td>
                   <td>${product.min_quantity}</td>
                   <td>
-                    <input type="number" name="quantities[${product.id}]" min="0" placeholder="השאר ריק אם לא מעוניין" />
+                    <input type="number1" name="quantities[${product.id}]" min="0" placeholder="השאר ריק אם לא מעוניין" />
                     <input type="hidden" name="products[${product.id}]" value="${product.product_name}" />
                     <input type="hidden" name="minQuantities[${product.id}]" value="${product.min_quantity}" />
                   </td>

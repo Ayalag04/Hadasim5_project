@@ -1,9 +1,3 @@
-CREATE TABLE FamilyTree (
-    Person_Id INT,
-    Relative_Id INT,
-    Connection_Type VARCHAR(20),
-    PRIMARY KEY (Person_Id, Relative_Id, Connection_Type)
-);
 CREATE TABLE Person (
     Person_Id INT PRIMARY KEY,  -- מפתח-תז של אדם
     Personal_Name VARCHAR(50),  
@@ -61,7 +55,9 @@ INSERT INTO FamilyTree (Person_Id, Relative_Id, Connection_Type)
 SELECT Person_Id, Spouse_Id,
        CASE WHEN Gender = 'זכר' THEN 'בת זוג' ELSE 'בן זוג' END
 FROM Person
-WHERE Spouse_Id IS NOT NULL;
+WHERE Spouse_Id IS NOT NULL
+  AND Gender = 'זכר';  -- או Gender = 'נקבה' בהתאם למי שאתה רוצה
+
 
 --הוספת קשר של אח/ אחות 
 -- אח
@@ -83,14 +79,28 @@ WHERE p1.Father_Id = p2.Father_Id
   AND p2.Gender = 'נקבה';
 
 
---חלק 2 
-INSERT INTO FamilyTree (Person_Id, Relative_Id, Connection_Type)
-SELECT Spouse_Id, Person_Id, CASE WHEN Gender = 'זכר' THEN 'בן זוג' ELSE 'בת זוג' END
-FROM Person
-WHERE Spouse_Id IS NOT NULL
-  AND NOT EXISTS (
-    SELECT 1
-    FROM FamilyTree
-    WHERE (Person_Id = Spouse_Id AND Relative_Id = Person_Id) 
-       OR (Person_Id = Person_Id AND Relative_Id = Spouse_Id)
-  );
+--חלק 2 INSERT INTO FamilyTree (Person_Id, Relative_Id, Connection_Type)
+SELECT 
+    f.Relative_Id, 
+    f.Person_Id, 
+    CASE 
+        WHEN f.Connection_Type = 'בת זוג' THEN 'בן זוג'
+        WHEN f.Connection_Type = 'בן זוג' THEN 'בת זוג'
+    END
+FROM FamilyTree f
+JOIN Person p1 ON f.Person_Id = p1.Person_Id
+JOIN Person p2 ON f.Relative_Id = p2.Person_Id
+WHERE (f.Connection_Type = 'בת זוג' AND NOT EXISTS (
+    SELECT 1 
+    FROM FamilyTree f2 
+    WHERE f2.Person_Id = f.Relative_Id 
+      AND f2.Relative_Id = f.Person_Id 
+      AND f2.Connection_Type = 'בן זוג'
+))
+OR (f.Connection_Type = 'בן זוג' AND NOT EXISTS (
+    SELECT 1 
+    FROM FamilyTree f2 
+    WHERE f2.Person_Id = f.Relative_Id 
+      AND f2.Relative_Id = f.Person_Id 
+      AND f2.Connection_Type = 'בת זוג'
+));

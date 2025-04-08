@@ -26,4 +26,6 @@ router.get("/orders", ownerController.viewAllOrders);
 // אישור הזמנה
 router.post("/orders/approve/:orderId", ownerController.approveOrder);
 
+router.get("/", ownerController.getout);
+
 module.exports = router;

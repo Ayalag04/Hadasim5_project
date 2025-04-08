@@ -57,7 +57,7 @@ const SupplierController = {
             return res.status(500).send("שגיאה בהרשמה");
           }
 
-          const supplierId = result.insertId;
+          const supplierId = result.id;
 
           // הוספת מוצרים לספק לאחר שמבצע הרשמה עם פרטיו
           productNames.forEach((productName, i) => {
@@ -93,7 +93,7 @@ const SupplierController = {
     try {
       SupplierModel.getOrdersBySupplierId(
         supplierId,
-        selectedStatus,                             //לפי סטטוס מסוים 
+        selectedStatus, //לפי סטטוס מסוים
         (err, orders) => {
           if (err) {
             return res.status(500).send("שגיאה בהבאת הזמנות");

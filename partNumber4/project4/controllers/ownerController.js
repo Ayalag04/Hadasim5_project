@@ -26,6 +26,11 @@ const OwnerController = {
     }
   },
 
+  getout: async (req, res) => {
+    req.session.destroy();
+    res.render("index");
+  },
+
   getSupplierProducts: async (req, res) => {
     const { supplierId } = req.params;
     try {
